@@ -4,14 +4,16 @@ config("clang") {
     "-Wall",
     "-Wpedantic",
     "-nostdlibinc",
+    "-ffreestanding",
     "-fno-stack-protector",
     "-fshort-wchar",
+    "-fno-pic",
     "-mno-red-zone",
   ]
   cflags_c = []
   cflags_cc = []
   ldflags = []
-  cflags_c += [ "-std=c99" ]
+  cflags_c += [ "-std=c23" ]
   cflags_cc += [ "-std=c++20" ]
   libs = []
 }

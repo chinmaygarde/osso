@@ -7,7 +7,7 @@
 /// https://uefi.org/specs/UEFI/2.11/02_Overview.html#data-types
 typedef bool BOOLEAN;
 static_assert(sizeof(bool) == sizeof(uint8_t), "BOOLEAN must be byte");
-typedef char16_t CHAR16;
+typedef short CHAR16;
 typedef int32_t INT32;
 typedef uint32_t UINT32;
 typedef uint64_t UINT64;

@@ -6,7 +6,7 @@ toolchain("clang") {
   # Common description prefixes in non-verbose invocation.
   pretty_build_prefix = "🔨 "
   pretty_link_prefix = "⛓️ "
-  target_triple = "x86_64-pc-win32-coff"
+  target_triple = "aarch64-unknown-unknown"
 
   cc = "${toolchain_path}/bin/clang"
   ld = "${toolchain_path}/bin/lld-link"
