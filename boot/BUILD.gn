@@ -1,0 +1,7 @@
+executable("boot") {
+  sources = [
+    "console.h",
+    "efi.h",
+    "main.c",
+  ]
+}

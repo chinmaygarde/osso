@@ -1,0 +1,5 @@
+set_default_toolchain("//build/config/toolchain/clang")
+
+set_defaults("executable") {
+  configs = [ "//build/config/compiler/clang" ]
+}

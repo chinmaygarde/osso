@@ -1,0 +1,17 @@
+config("clang") {
+  cflags = [
+    "-Werror",
+    "-Wall",
+    "-Wpedantic",
+    "-nostdlibinc",
+    "-fno-stack-protector",
+    "-fshort-wchar",
+    "-mno-red-zone",
+  ]
+  cflags_c = []
+  cflags_cc = []
+  ldflags = []
+  cflags_c += [ "-std=c99" ]
+  cflags_cc += [ "-std=c++20" ]
+  libs = []
+}

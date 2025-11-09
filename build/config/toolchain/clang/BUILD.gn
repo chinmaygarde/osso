@@ -1,0 +1,34 @@
+declare_args() {
+  toolchain_path = "/opt/homebrew/opt/llvm"
+}
+
+toolchain("clang") {
+  # Common description prefixes in non-verbose invocation.
+  pretty_build_prefix = "🔨 "
+  pretty_link_prefix = "⛓️ "
+  target_triple = "x86_64-pc-win32-coff"
+
+  cc = "${toolchain_path}/bin/clang"
+  ld = "${toolchain_path}/bin/lld-link"
+
+  tool("cc") {
+    depfile = "{{output}}.deps"
+    command = "$cc -o {{output}} -MMD -MF $depfile-c -target ${target_triple} {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
+    outputs = [
+      "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o",
+    ]
+    depsformat = "gcc"
+    description = "$pretty_build_prefix CC: {{source_name_part}}"
+  }
+
+  tool("link") {
+    outfile = "{{target_out_dir}}/{{target_output_name}}/executables/{{target_output_name}}"
+    rspfile = "$outfile.rsp"
+    rspfile_content = "{{inputs}}"
+    command = "$ld -o $outfile {{ldflags}} {{solibs}} {{libs}} @$rspfile"
+    outputs = [
+      outfile,
+    ]
+    description = "$pretty_link_prefix Link Executable: {{target_output_name}}"
+  }
+}
