@@ -14,3 +14,6 @@ sync:
 # Clean the build directories.
 clean:
   rm -rf out/
+
+gn *flags:
+  ./third_party/gn/gn {{flags}}

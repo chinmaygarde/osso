@@ -1,5 +1,5 @@
 declare_args() {
-  toolchain_path = "/Users/saturn/VersionControlled/llvm-project/build"
+  toolchain_path = "//third_party/llvm/llvm"
 }
 
 toolchain("clang") {
@@ -10,8 +10,8 @@ toolchain("clang") {
 
   assert(toolchain_path != "", "Clang toolchain path must be specified.")
 
-  cc = "${toolchain_path}/bin/clang"
-  ld = "${toolchain_path}/bin/lld"
+  cc = rebase_path("${toolchain_path}/bin/clang")
+  ld = rebase_path("${toolchain_path}/bin/lld")
 
   tool("cc") {
     depfile = "{{output}}.deps"
