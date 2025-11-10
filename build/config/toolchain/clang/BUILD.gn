@@ -1,12 +1,14 @@
 declare_args() {
-  toolchain_path = "/Users/saturn/VersionControlled/llvm-project/build"
+  toolchain_path = "/opt/homebrew/opt/llvm"
 }
 
 toolchain("clang") {
   # Common description prefixes in non-verbose invocation.
   pretty_build_prefix = "🔨 "
   pretty_link_prefix = "⛓️ "
-  target_triple = "aarch64-pe-unknown"
+  target_triple = "aarch64-unknown-unknown"
+
+  assert(toolchain_path != "", "Clang toolchain path must be specified.")
 
   cc = "${toolchain_path}/bin/clang"
   ld = "${toolchain_path}/bin/clang-cl"
@@ -14,9 +16,7 @@ toolchain("clang") {
   tool("cc") {
     depfile = "{{output}}.deps"
     command = "$cc -c -o {{output}} -MMD -MF $depfile -target ${target_triple} {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
-    outputs = [
-      "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o",
-    ]
+    outputs = [ "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o" ]
     depsformat = "gcc"
     description = "$pretty_build_prefix CC: {{source_name_part}}"
   }
@@ -24,9 +24,7 @@ toolchain("clang") {
   tool("link") {
     outfile = "{{target_out_dir}}/{{target_output_name}}/executables/{{target_output_name}}"
     command = "$ld /nologo /nodefaultlib /entry:efi_main /subsystem:efi_application /machine:ARM64 /out:{{target_output_name}} {{inputs}}"
-    outputs = [
-      outfile,
-    ]
+    outputs = [ outfile ]
     description = "$pretty_link_prefix Link Executable: {{target_output_name}}"
   }
 }

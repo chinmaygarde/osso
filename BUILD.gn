@@ -1,5 +1,3 @@
 group("default") {
-  public_deps = [
-    "boot"
-  ]
+  public_deps = [ "boot" ]
 }
