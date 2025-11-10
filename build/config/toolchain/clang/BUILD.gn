@@ -1,19 +1,19 @@
 declare_args() {
-  toolchain_path = "/opt/homebrew/opt/llvm"
+  toolchain_path = "/Users/saturn/VersionControlled/llvm-project/build"
 }
 
 toolchain("clang") {
   # Common description prefixes in non-verbose invocation.
   pretty_build_prefix = "🔨 "
   pretty_link_prefix = "⛓️ "
-  target_triple = "aarch64-unknown-unknown"
+  target_triple = "aarch64-pe-unknown"
 
   cc = "${toolchain_path}/bin/clang"
-  ld = "${toolchain_path}/bin/llvm-ld"
+  ld = "${toolchain_path}/bin/clang-cl"
 
   tool("cc") {
     depfile = "{{output}}.deps"
-    command = "$cc -o {{output}} -MMD -MF $depfile-c -target ${target_triple} {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
+    command = "$cc -c -o {{output}} -MMD -MF $depfile -target ${target_triple} {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
     outputs = [
       "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o",
     ]
