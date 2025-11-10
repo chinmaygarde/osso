@@ -9,7 +9,7 @@ toolchain("clang") {
   target_triple = "aarch64-unknown-unknown"
 
   cc = "${toolchain_path}/bin/clang"
-  ld = "${toolchain_path}/bin/lld-link"
+  ld = "${toolchain_path}/bin/llvm-ld"
 
   tool("cc") {
     depfile = "{{output}}.deps"
@@ -23,9 +23,7 @@ toolchain("clang") {
 
   tool("link") {
     outfile = "{{target_out_dir}}/{{target_output_name}}/executables/{{target_output_name}}"
-    rspfile = "$outfile.rsp"
-    rspfile_content = "{{inputs}}"
-    command = "$ld -o $outfile {{ldflags}} {{solibs}} {{libs}} @$rspfile"
+    command = "$ld /nologo /nodefaultlib /entry:efi_main /subsystem:efi_application /machine:ARM64 /out:{{target_output_name}} {{inputs}}"
     outputs = [
       outfile,
     ]
