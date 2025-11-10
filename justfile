@@ -21,13 +21,12 @@ gn *flags:
   ./third_party/gn/gn {{flags}}
 
 run: build
-  qemu-system-aarch64 \
-    -M virt \
-    -cpu cortex-a53 \
-    -m 512M \
-    -nographic \
-    -drive if=pflash,format=raw,readonly=on,file=/Users/buzzy/Downloads/QEMU_EFI.fd \
-    -drive if=none,file=out/EFI/Boot/BOOTX64.efi,format=raw,id=hd0 \
-    -device virtio-blk-pci,drive=hd0 \
-    -serial stdio \
+  qemu-system-aarch64       \
+    -M virt                 \
+    -cpu cortex-a53         \
+    -m 512M                 \
+    -nographic              \
+    -serial stdio           \
+    -drive if=pflash,format=raw,readonly=on,file=`brew --prefix qemu`/share/qemu/edk2-aarch64-code.fd \
+    -drive file=fat:rw:out,format=raw,if=virtio                                                       \
     -monitor telnet:127.0.0.1:45454,server,nowait

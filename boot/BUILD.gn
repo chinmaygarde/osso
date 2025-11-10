@@ -1,5 +1,5 @@
 executable("boot") {
-  output_name = "BOOTX64"
+  output_name = "BOOTAA64"
   sources = [
     "console.h",
     "efi.h",
