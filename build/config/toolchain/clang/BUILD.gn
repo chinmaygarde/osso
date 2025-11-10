@@ -10,8 +10,8 @@ toolchain("clang") {
 
   assert(toolchain_path != "", "Clang toolchain path must be specified.")
 
-  cc = rebase_path("${toolchain_path}/bin/clang")
-  ld = rebase_path("${toolchain_path}/bin/lld")
+  cc = rebase_path("${toolchain_path}/bin/clang", root_build_dir)
+  ld = rebase_path("${toolchain_path}/bin/lld", root_build_dir)
 
   tool("cc") {
     depfile = "{{output}}.deps"
@@ -24,9 +24,9 @@ toolchain("clang") {
 
   tool("link") {
     outfile =
-        "{{target_out_dir}}/{{target_output_name}}/{{target_output_name}}.efi"
+        "EFI/Boot/{{target_output_name}}.efi"
     command = "$ld -flavor link -subsystem:efi_application -entry:efi_main {{inputs}} -out:$outfile"
     outputs = [ outfile ]
-    description = "$pretty_link_prefix Link EFI: {{target_output_name}}"
+    description = "$pretty_link_prefix Link EFI: $outfile"
   }
 }
