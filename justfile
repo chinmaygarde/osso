@@ -5,7 +5,7 @@ ninja *flags:
 
 # Generate the build directory.
 gen:
-  ./third_party/gn/gn gen out
+  ./third_party/gn/gn gen --check --export-compile-commands=default out
 
 # Sync all dependencies fetched over the network.
 sync:
