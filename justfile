@@ -1,5 +1,7 @@
+# Build the project. Needs the gen task to be run first.
+build: ninja
 
-# Build the project. Needs the gen step to be run first.
+# Invoke ninja.
 ninja *flags:
   ninja -C out {{flags}}
 

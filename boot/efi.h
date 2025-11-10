@@ -11,7 +11,7 @@ typedef short CHAR16;
 typedef int32_t INT32;
 typedef uint32_t UINT32;
 typedef uint64_t UINT64;
-typedef uint64_t UINTN;
+typedef UINT64 UINTN;
 typedef void* EFI_HANDLE;
 
 #define IN
@@ -103,7 +103,7 @@ typedef struct {
   INT32 CursorColumn;
   INT32 CursorRow;
   BOOLEAN CursorVisible;
-} SIMPLE_TEXT_OUTPUT_MODE;
+} EFI_SIMPLE_TEXT_OUTPUT_MODE;
 
 struct _EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL {
   EFI_TEXT_RESET Reset;
@@ -115,7 +115,7 @@ struct _EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL {
   EFI_TEXT_CLEAR_SCREEN ClearScreen;
   EFI_TEXT_SET_CURSOR_POSITION SetCursorPosition;
   EFI_TEXT_ENABLE_CURSOR EnableCursor;
-  SIMPLE_TEXT_OUTPUT_MODE* Mode;
+  EFI_SIMPLE_TEXT_OUTPUT_MODE* Mode;
 };
 
 // https://uefi.org/specs/UEFI/2.11/04_EFI_System_Table.html#id6
