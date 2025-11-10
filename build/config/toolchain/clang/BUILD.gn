@@ -1,5 +1,5 @@
 declare_args() {
-  toolchain_path = "/opt/homebrew/opt/llvm"
+  toolchain_path = "/Users/saturn/VersionControlled/llvm-project/build"
 }
 
 toolchain("clang") {
@@ -11,20 +11,22 @@ toolchain("clang") {
   assert(toolchain_path != "", "Clang toolchain path must be specified.")
 
   cc = "${toolchain_path}/bin/clang"
-  ld = "${toolchain_path}/bin/clang-cl"
+  ld = "${toolchain_path}/bin/lld"
 
   tool("cc") {
     depfile = "{{output}}.deps"
     command = "$cc -c -o {{output}} -MMD -MF $depfile -target ${target_triple} {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
-    outputs = [ "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o" ]
+    outputs =
+        [ "{{target_out_dir}}/{{target_output_name}}/{{source_name_part}}.o" ]
     depsformat = "gcc"
     description = "$pretty_build_prefix CC: {{source_name_part}}"
   }
 
   tool("link") {
-    outfile = "{{target_out_dir}}/{{target_output_name}}/executables/{{target_output_name}}"
-    command = "$ld /link /nologo /nodefaultlib /entry:efi_main /subsystem:efi_application /machine:ARM64 {{inputs}} /out:{{target_output_name}}"
+    outfile =
+        "{{target_out_dir}}/{{target_output_name}}/{{target_output_name}}.efi"
+    command = "$ld -flavor link -subsystem:efi_application -entry:efi_main {{inputs}} -out:$outfile"
     outputs = [ outfile ]
-    description = "$pretty_link_prefix Link Executable: {{target_output_name}}"
+    description = "$pretty_link_prefix Link EFI: {{target_output_name}}"
   }
 }

@@ -1,6 +1,6 @@
 
 # Build the project. Needs the gen step to be run first.
-build *flags:
+ninja *flags:
   ninja -C out {{flags}}
 
 # Generate the build directory.
