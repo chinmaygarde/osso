@@ -6,7 +6,7 @@ toolchain("clang") {
   # Common description prefixes in non-verbose invocation.
   pretty_build_prefix = "🔨 "
   pretty_link_prefix = "⛓️ "
-  target_triple = "aarch64-unknown-unknown"
+  target_triple = "aarch64-unknown-windows"
 
   assert(toolchain_path != "", "Clang toolchain path must be specified.")
 
@@ -23,7 +23,7 @@ toolchain("clang") {
 
   tool("link") {
     outfile = "{{target_out_dir}}/{{target_output_name}}/executables/{{target_output_name}}"
-    command = "$ld /nologo /nodefaultlib /entry:efi_main /subsystem:efi_application /machine:ARM64 /out:{{target_output_name}} {{inputs}}"
+    command = "$ld /link /nologo /nodefaultlib /entry:efi_main /subsystem:efi_application /machine:ARM64 {{inputs}} /out:{{target_output_name}}"
     outputs = [ outfile ]
     description = "$pretty_link_prefix Link Executable: {{target_output_name}}"
   }
