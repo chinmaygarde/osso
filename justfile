@@ -1,8 +1,8 @@
-# Build the project. Needs the gen task to be run first.
+# Build the project.
 build: ninja
 
 # Invoke ninja.
-ninja *flags:
+ninja *flags: gen
   ninja -C out {{flags}}
 
 # Generate the build directory.
